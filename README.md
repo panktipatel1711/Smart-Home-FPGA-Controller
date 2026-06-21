@@ -89,7 +89,7 @@ Smart-Home-FPGA-Controller/
 
 ```
 ---
----
+
 
 ## 📊 Verification & Waveform Analysis
 
