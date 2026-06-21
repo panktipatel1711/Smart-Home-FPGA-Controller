@@ -1,0 +1,46 @@
+# =============================================================================
+# PROFESSIONAL EDA/VLSI PROJECT GITIGNORE TEMPLATE
+# =============================================================================
+
+# --- Simulation Outputs & Waveforms (Ignore completely) ---
+# Isse aapke sim aur waveforms folder ke andar ka temporary kachra upload nahi hoga
+sim/
+waveforms/
+*.vcd
+*.vwf
+*.wdb
+*.log
+*.key
+*.history
+*.sim/
+
+# --- Vivado / Xilinx / Intel Quartus Temporary Tool Files ---
+# Agar aap kabhi Vivado ya Quartus use karein, toh unka kachra bhi ignore ho jayega
+.Xil/
+hd_visual/
+*.jou
+*.log
+*.pb
+*.str
+*.dir/
+*.backup/
+xsim.dir/
+xvlog.pb
+xelab.pb
+
+# --- OS Specific Temporary Files ---
+.DS_Store
+Thumbs.db
+
+# =============================================================================
+# EXCEPTIONS (Kyunki hume folders ko GitHub par setup rakhna hai)
+# =============================================================================
+
+# Docs folder ko poora allow karna hai taaki aapki reports aur images upload ho sakein
+!docs/
+!docs/**
+
+# sim aur waveforms folders ko GitHub par empty structure ke roop mein maintain rakhne ke liye
+# (Kyunki Git empty folders ko track nahi karta, isliye unme .gitkeep file honi chahiye)
+!sim/.gitkeep
+!waveforms/.gitkeep
