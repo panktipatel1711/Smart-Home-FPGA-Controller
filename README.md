@@ -29,35 +29,30 @@ This controller incorporates foundational digital VLSI engineering design criter
 
 ## 🗺️ Functional System Architecture
 
-+-----------------------------------------------------+
-|                 SYSTEM MASTER CLOCK                 |
-+-----------------------------------------------------+
-|
-v
-+----------------+  +----------------+  +------------------+
-|  PIR (Motion)  |  |   LDR (Dark)   |  | Over-Current (F) |
-+----------------+  +----------------+  +------------------+
-|                   |                     |
-v                   v                     v
-+-----------------------------------------------------+
-|        INPUT SYNCHRONIZATION & DEBOUNCE CORE        |
-+-----------------------------------------------------+
-|
-v (Stable Sensor Signals)
-+-----------------------------------------------------+
-|          CENTRAL CONTROLLER STATE MACHINE (FSM)     |
-+-----------------------------------------------------+
-|
-v (Target Duty Registers)
-+-----------------------------------------------------+
-|         8-BIT ACTUATOR MODULATORS (PWM)             |
-+-----------------------------------------------------+
-|
-v
-+-----------------------------------------------------+
-|      PHYSICAL OUTPUTS (PWM Dimmers, Relay Buses)    |
-+-----------------------------------------------------+
----
+```mermaid
+graph TD
+    %% Global System Timing Integration
+    CLK[System Master Clock: 50MHz] --> |Timing Domain| TICK[System Tick Dividers: clk_en.v]
+    TICK --> |10Hz Strobe| DB[Debounce Filter & Sync Core]
+    TICK --> |1kHz Strobe| PWM[8-Bit PWM Actuators]
+
+    %% Input Subsystems Data Stream
+    SENSORS[Raw Sensors & Switches: PIR, LDR, Temp, Over-Current] --> DB
+    DB --> |Stable Clean Vectors| FSM[Central FSM Controller Core: ctrl_fsm.v]
+
+    %% Logic Core To Real Actuation Routing
+    FSM --> |Target Duty Registers| PWM
+    FSM --> |Direct Dynamic Vectors| RELAYS[Relay Output Buses]
+
+    %% End Actuators Load Delivery Phase
+    PWM --> |Modulated Signals| LOADS[Physical Loads: Dimmer Lamps, Cooling Fans]
+    RELAYS --> |Power Bus Controls| SOCKETS[Auxiliary Smart Sockets]
+
+    %% Color Adjustments for Visual Interface
+    style CLK fill:#111,stroke:#00ff80,stroke-width:2px,color:#fff
+    style FSM fill:#111,stroke:#00ccff,stroke-width:2px,color:#fff
+    style SENSORS fill:#222,stroke:#ff3333,stroke-width:1px,color:#aaa
+    style LOADS fill:#222,stroke:#00ff80,stroke-width:1px,color:#aaa
 ```
 ## 🗂️ Project Directory Structure
 ```text
