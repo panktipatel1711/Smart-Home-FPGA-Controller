@@ -66,7 +66,7 @@ v
 
 
 ---
-text```
+```
 ## 🗂️ Project Directory Structure
 
 Smart-Home-FPGA-Controller/
@@ -89,7 +89,7 @@ Smart-Home-FPGA-Controller/
 
 ```
 ---
-
+---
 
 ## 📊 Verification & Waveform Analysis
 
