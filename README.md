@@ -29,46 +29,38 @@ This controller incorporates foundational digital VLSI engineering design criter
 
 ## 🗺️ Functional System Architecture
 
-+---------------------------------------+
-                              |            SYSTEM MASTER CLOCK        |
-                              +---------------------------------------+
-                                                  |
-                                                  v
-+-----------------------+               +-----------------------+
-|  Asynchronous Sensors  |               |  System Tick Dividers |
-| (PIR, LDR, Temp, OC)  |               |       (clk_en.v)      |
-+-----------------------+               +-----------------------+
-|                                       |
-v                                       v (10Hz / 1kHz)
-+-----------------------+                           |
-| Input Synchronization |                           |
-|    & Debounce Core    | <-------------------------+
-|     (debounce.v)      |                           |
-+-----------------------+                           |
-|                                       |
-v (Stable Signals)                      |
-+---------------------------------------+           |
-|   Central System FSM Control Core    |           |
-|             (ctrl_fsm.v)              |           |
-+---------------------------------------+           |
-|                                       |
-v (Target Duty Registers)               |
-+---------------------------------------+           |
-|     8-Bit Actuator Modulators         | <---------+
-|              (pwm8.v)                 |
-+---------------------------------------+
++-----------------------------------------------------+
+|                 SYSTEM MASTER CLOCK                 |
++-----------------------------------------------------+
 |
 v
-+---------------------------------------+
-| Physical Load Drivers & Alarms        |
-|  (PWM Dimming, Relays, Alarm LED)     |
-+---------------------------------------+
-
-
++----------------+  +----------------+  +------------------+
+|  PIR (Motion)  |  |   LDR (Dark)   |  | Over-Current (F) |
++----------------+  +----------------+  +------------------+
+|                   |                     |
+v                   v                     v
++-----------------------------------------------------+
+|        INPUT SYNCHRONIZATION & DEBOUNCE CORE        |
++-----------------------------------------------------+
+|
+v (Stable Sensor Signals)
++-----------------------------------------------------+
+|          CENTRAL CONTROLLER STATE MACHINE (FSM)     |
++-----------------------------------------------------+
+|
+v (Target Duty Registers)
++-----------------------------------------------------+
+|         8-BIT ACTUATOR MODULATORS (PWM)             |
++-----------------------------------------------------+
+|
+v
++-----------------------------------------------------+
+|      PHYSICAL OUTPUTS (PWM Dimmers, Relay Buses)    |
++-----------------------------------------------------+
 ---
 ```
 ## 🗂️ Project Directory Structure
-
+```text
 Smart-Home-FPGA-Controller/
 │
 ├── rtl/                        # Synthesizable Register Transfer Level Sources
